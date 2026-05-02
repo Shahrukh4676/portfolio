@@ -1,0 +1,199 @@
+
+<style>
+  .about-wrap { font-family: var(--font-sans); padding: 1.5rem 0; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; }
+  .card-full { grid-column: 1 / -1; }
+  .avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--color-background-info); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 500; color: var(--color-text-info); flex-shrink: 0; }
+  .label { font-size: 12px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; padding: 3px 10px; border-radius: var(--border-radius-md); border: 0.5px solid; }
+  .badge-green { background: var(--color-background-success); color: var(--color-text-success); border-color: var(--color-border-success); }
+  .badge-info { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .stat-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem; text-align: center; }
+  .stat-num { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+  .stat-lbl { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; line-height: 1.3; }
+  .bar-track { height: 6px; background: var(--color-background-secondary); border-radius: 99px; overflow: hidden; margin-top: 6px; }
+  .bar-fill { height: 100%; border-radius: 99px; width: 0%; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+  .bar-purple { background: #7F77DD; }
+  .bar-teal { background: #1D9E75; }
+  .bar-blue { background: #378ADD; }
+  .bar-coral { background: #D85A30; }
+  .bar-amber { background: #BA7517; }
+  .tag { display: inline-block; font-size: 12px; padding: 3px 10px; border-radius: 99px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); margin: 3px 2px; }
+  .row { display: flex; align-items: center; gap: 10px; }
+  .info-row { display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .info-row:last-child { border-bottom: none; }
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  h2 { font-size: 18px; font-weight: 500; margin: 0 0 4px; color: var(--color-text-primary); }
+  h3 { font-size: 14px; font-weight: 500; margin: 0 0 12px; color: var(--color-text-primary); }
+  p { font-size: 14px; line-height: 1.7; color: var(--color-text-secondary); margin: 0; }
+</style>
+
+<div class="about-wrap">
+  <div class="about-grid">
+
+    <div class="card fade-in" style="grid-column: 1 / -1; transition-delay: 0s;">
+      <div class="row" style="margin-bottom: 14px;">
+        <div class="avatar">AD</div>
+        <div>
+          <h2>Aditi Das</h2>
+          <p style="font-size: 13px; margin-bottom: 6px;">B.Tech CSE, 2nd Year &nbsp;·&nbsp; Kishkindha University</p>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <span class="badge badge-green"><span class="dot"></span> Open to opportunities</span>
+            <span class="badge badge-info">Ballari, Karnataka</span>
+          </div>
+        </div>
+      </div>
+      <p>I am a second-year Computer Science student with a broad interest spanning full stack development, machine learning, UI/UX design, and competitive programming. I believe in building with purpose — writing clean code, contributing to open source, and continuously pushing the boundaries of what I can create. Strong communication and collaboration are at the core of how I work, making me as effective in a team as I am heads-down in a terminal.</p>
+    </div>
+
+    <div class="card fade-in" style="transition-delay: 0.1s;">
+      <h3>Quick info</h3>
+      <div class="info-row"><span style="color: var(--color-text-secondary);">University</span><span style="font-weight: 500; font-size: 13px;">Kishkindha University</span></div>
+      <div class="info-row"><span style="color: var(--color-text-secondary);">Branch</span><span style="font-weight: 500; font-size: 13px;">Computer Science & Eng.</span></div>
+      <div class="info-row"><span style="color: var(--color-text-secondary);">Year</span><span style="font-weight: 500; font-size: 13px;">2nd Year (2023–2027)</span></div>
+      <div class="info-row"><span style="color: var(--color-text-secondary);">Location</span><span style="font-weight: 500; font-size: 13px;">Ballari, Karnataka</span></div>
+      <div class="info-row"><span style="color: var(--color-text-secondary);">Available for</span><span style="font-weight: 500; font-size: 13px;">Internships &amp; Freelance</span></div>
+    </div>
+
+    <div class="card fade-in" style="transition-delay: 0.15s;">
+      <h3>Highlights</h3>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px;">
+          <span style="color: var(--color-text-info); font-size: 16px; line-height: 1.2;">&#9670;</span>
+          <span style="color: var(--color-text-secondary);">Participated in <strong style="color: var(--color-text-primary); font-weight: 500;">Smart India Hackathon</strong> internal round</span>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px;">
+          <span style="color: var(--color-text-info); font-size: 16px; line-height: 1.2;">&#9670;</span>
+          <span style="color: var(--color-text-secondary);">Built multiple projects across web, AI, and DSA domains</span>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px;">
+          <span style="color: var(--color-text-info); font-size: 16px; line-height: 1.2;">&#9670;</span>
+          <span style="color: var(--color-text-secondary);">Active in <strong style="color: var(--color-text-primary); font-weight: 500;">open source</strong> contributions and community</span>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px;">
+          <span style="color: var(--color-text-info); font-size: 16px; line-height: 1.2;">&#9670;</span>
+          <span style="color: var(--color-text-secondary);">Strong communicator — effective in teams and presentations</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-full fade-in" style="transition-delay: 0.2s;">
+      <h3>Stats</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-num" data-target="10">0</div>
+          <div class="stat-lbl">Projects built</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" data-target="3">0</div>
+          <div class="stat-lbl">Hackathons</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" data-target="5">0</div>
+          <div class="stat-lbl">Technologies</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" data-target="200">0</div>
+          <div class="stat-lbl">DSA problems</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-full fade-in" style="transition-delay: 0.25s;">
+      <h3>Currently learning</h3>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px;">
+            <span style="color: var(--color-text-primary);">Full stack development</span>
+            <span style="color: var(--color-text-secondary);">70%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill bar-purple" data-width="70"></div></div>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px;">
+            <span style="color: var(--color-text-primary);">Machine learning &amp; AI</span>
+            <span style="color: var(--color-text-secondary);">50%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill bar-teal" data-width="50"></div></div>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px;">
+            <span style="color: var(--color-text-primary);">Competitive programming &amp; DSA</span>
+            <span style="color: var(--color-text-secondary);">60%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill bar-blue" data-width="60"></div></div>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px;">
+            <span style="color: var(--color-text-primary);">UI/UX design</span>
+            <span style="color: var(--color-text-secondary);">45%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill bar-coral" data-width="45"></div></div>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px;">
+            <span style="color: var(--color-text-primary);">DevOps &amp; cloud</span>
+            <span style="color: var(--color-text-secondary);">35%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill bar-amber" data-width="35"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-full fade-in" style="transition-delay: 0.3s;">
+      <h3>Interests &amp; passions</h3>
+      <div>
+        <span class="tag">Open source</span>
+        <span class="tag">Hackathons</span>
+        <span class="tag">Communication</span>
+        <span class="tag">Web development</span>
+        <span class="tag">AI &amp; ML</span>
+        <span class="tag">Problem solving</span>
+        <span class="tag">UI/UX</span>
+        <span class="tag">DSA</span>
+        <span class="tag">Cloud tech</span>
+        <span class="tag">Tech communities</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const cards = document.querySelectorAll('.fade-in');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  cards.forEach(c => io.observe(c));
+
+  function animateCounters() {
+    document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      const suffix = target >= 10 && target !== 200 ? '+' : target === 200 ? '+' : '';
+      let start = 0;
+      const step = target / 40;
+      const timer = setInterval(() => {
+        start = Math.min(start + step, target);
+        el.textContent = Math.floor(start) + suffix;
+        if (start >= target) clearInterval(timer);
+      }, 40);
+    });
+  }
+
+  function animateBars() {
+    document.querySelectorAll('.bar-fill[data-width]').forEach(bar => {
+      setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 100);
+    });
+  }
+
+  const statsCard = document.querySelector('.stat-grid');
+  const statsIO = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) { animateCounters(); animateBars(); statsIO.disconnect(); }
+  }, { threshold: 0.3 });
+  statsIO.observe(statsCard);
+</script>
