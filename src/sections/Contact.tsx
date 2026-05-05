@@ -1,96 +1,53 @@
-import { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from "framer-motion";
 
 export function Contact() {
-  const [sent, setSent] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Conceptual EmailJS integration
-    setSent(true);
-  };
-
   return (
-    <section id="contact" ref={ref} className="relative w-full py-20 md:py-32 px-6 bg-[#0A0F1C] overflow-hidden">
-      <div
-        className="glow-blob w-[800px] h-[800px] opacity-[0.04]"
-        style={{ background: '#00E5FF', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-      />
+    <section id="contact" className="relative w-full py-24 px-6 bg-[#0A0F1C] overflow-hidden">
+      {/* Background blobs */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto relative z-10">
-        <div className={`text-center mb-16 reveal ${isInView ? 'visible' : ''}`}>
-          <span className="section-label mb-4 block opacity-40">06 / Contact</span>
-          <h2
-            className="heading-lg text-white mb-6"
-            style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontFamily: "'Outfit', sans-serif" }}
-          >
-            Let's <span className="gradient-text">Work Together</span>
-          </h2>
-          <p className="text-white/40 text-lg max-w-xl mx-auto font-mono text-sm tracking-wide">
-            Ready to initiate your next vision? Drop a message below.
-          </p>
-        </div>
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="flex flex-col lg:flex-row gap-20 items-center">
+          
+          {/* Left: Text */}
+          <div className="w-full lg:w-1/2">
+            <span className="text-cyan font-mono text-sm tracking-widest uppercase mb-4 block">06 / Contact</span>
+            <h2 className="text-white text-[clamp(2.5rem,7vw,5rem)] font-black leading-[0.9] mb-8" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              Let's build<br />
+              something <span className="gradient-text">insane.</span>
+            </h2>
+            <p className="text-white/40 text-lg max-w-md">
+              Whether you have a specific vision or just want to explore the possibilities, I'm ready to dive in.
+            </p>
+          </div>
 
-        <div className={`glass rounded-[3rem] p-10 md:p-16 border border-white/5 bg-white/[0.01] reveal ${isInView ? 'visible' : ''}`} style={{ transitionDelay: '0.2s' }}>
-          {sent ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-20"
-            >
-              <div className="text-6xl mb-8">✨</div>
-              <h3 className="text-white text-3xl font-bold mb-4" style={{ fontFamily: "'Outfit', sans-serif" }}>Message Sent!</h3>
-              <p className="text-white/40 font-mono text-sm">I'll get back to you within 24 hours.</p>
-              <button 
-                onClick={() => setSent(false)}
-                className="mt-12 text-[#00E5FF] text-xs uppercase tracking-widest font-bold hover:text-white transition-colors"
-              >
-                Send another message
-              </button>
-            </motion.div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Right: Form */}
+          <div className="w-full lg:w-1/2">
+            <form className="glass p-10 md:p-16 rounded-[3rem] space-y-8 border-white/5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="flex flex-col gap-3">
-                  <label className="text-[0.6rem] uppercase tracking-widest text-white/20 font-bold ml-2">Full Name</label>
-                  <input
-                    type="text"
-                    placeholder="John Doe"
-                    required
-                    className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-5 text-white focus:border-[#00E5FF]/50 outline-none transition-all focus:bg-white/[0.05]"
-                  />
+                <div className="space-y-2">
+                  <label className="text-[0.6rem] uppercase tracking-widest text-white/30 font-bold ml-2">Name</label>
+                  <input type="text" placeholder="Your Name" className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-cyan/50 transition-all" />
                 </div>
-                <div className="flex flex-col gap-3">
-                  <label className="text-[0.6rem] uppercase tracking-widest text-white/20 font-bold ml-2">Email Address</label>
-                  <input
-                    type="email"
-                    placeholder="john@example.com"
-                    required
-                    className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-5 text-white focus:border-[#00E5FF]/50 outline-none transition-all focus:bg-white/[0.05]"
-                  />
+                <div className="space-y-2">
+                  <label className="text-[0.6rem] uppercase tracking-widest text-white/30 font-bold ml-2">Email</label>
+                  <input type="email" placeholder="email@example.com" className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-cyan/50 transition-all" />
                 </div>
               </div>
-
-              <div className="flex flex-col gap-3">
-                <label className="text-[0.6rem] uppercase tracking-widest text-white/20 font-bold ml-2">Your Vision</label>
-                <textarea
-                  rows={5}
-                  placeholder="Tell me about your project, goals, and timeline..."
-                  required
-                  className="w-full bg-white/[0.03] border border-white/5 rounded-3xl px-6 py-5 text-white focus:border-[#00E5FF]/50 outline-none transition-all focus:bg-white/[0.05] resize-none"
-                />
+              <div className="space-y-2">
+                <label className="text-[0.6rem] uppercase tracking-widest text-white/30 font-bold ml-2">Message</label>
+                <textarea rows={4} placeholder="What's on your mind?" className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-cyan/50 transition-all resize-none" />
               </div>
-
-              <button
-                type="submit"
-                className="btn-primary w-full py-6 text-sm font-bold shadow-[0_0_30px_rgba(0,229,255,0.3)]"
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full py-5 rounded-2xl bg-gradient-to-r from-[#6C63FF] to-[#00D4FF] text-white font-bold text-sm tracking-widest uppercase hover:shadow-[0_0_40px_rgba(108,99,255,0.4)] transition-all"
               >
                 Send Message
-              </button>
+              </motion.button>
             </form>
-          )}
+          </div>
+
         </div>
       </div>
     </section>

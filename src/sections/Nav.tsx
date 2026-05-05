@@ -4,9 +4,9 @@ import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 const links = [
   { label: 'Profile', href: '#about' },
   { label: 'Expertise', href: '#skills' },
-  { label: 'Solutions', href: '#services' },
   { label: 'Masterpieces', href: '#projects' },
   { label: 'Journey', href: '#experience' },
+  { label: 'WOW', href: '#testimonials' },
 ];
 
 export function Nav() {
@@ -33,7 +33,7 @@ export function Nav() {
         style={{ boxShadow: scrolled ? '0 20px 40px rgba(0,0,0,0.4)' : 'none' }}
       >
         <a href="#" className="flex items-center gap-2 group">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#00E5FF] to-[#7C4DFF] flex items-center justify-center text-[#0A0F1C] font-bold text-[0.6rem]">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#6C63FF] to-[#FF4ECD] flex items-center justify-center text-white font-bold text-[0.6rem]">
             S
           </div>
           <span className="text-white font-bold tracking-[0.2em] uppercase text-[0.6rem] group-hover:tracking-[0.4em] transition-all duration-500" style={{ fontFamily: "'Outfit', sans-serif" }}>

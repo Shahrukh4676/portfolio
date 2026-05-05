@@ -1,109 +1,120 @@
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const projects = [
   {
-    id: 1,
-    title: 'Gold Trading Platform',
-    subtitle: 'Live gold rate + admin dashboard',
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000',
-    live: '#',
-    github: '#',
-    color: '#00E5FF',
+    title: "Gold Trading Hub",
+    problem: "Real-time volatility and admin control in precious metal trading.",
+    role: "Lead Full Stack",
+    stack: ["React", "Node.js", "WebSockets"],
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000",
   },
   {
-    id: 2,
-    title: 'Smart Crop Advisory',
-    subtitle: 'AI-Powered Agriculture Platform',
-    image: 'https://images.unsplash.com/photo-1495107336217-fc1d9f03c471?auto=format&fit=crop&q=80&w=1000',
-    live: '#',
-    github: '#',
-    color: '#00E5FF',
-  },
+    title: "Smart Crop AI",
+    problem: "Precision agriculture hindered by lack of real-time crop health data.",
+    role: "UX Architect",
+    stack: ["Python", "TensorFlow", "React Native"],
+    image: "https://images.unsplash.com/photo-1495107336217-fc1d9f03c471?auto=format&fit=crop&q=80&w=1000",
+  }
 ];
 
-export function Projects() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+function ProjectCard({ project }: { project: typeof projects[0] }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (rect) {
+      const width = rect.width;
+      const height = rect.height;
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      x.set(mouseX / width - 0.5);
+      y.set(mouseY / height - 0.5);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
-    <section id="projects" ref={ref} className="relative w-full py-20 md:py-32 px-6 bg-[#0A0F1C] overflow-hidden">
-      <div
-        className="glow-blob w-[800px] h-[800px] opacity-[0.03]"
-        style={{ background: '#7C4DFF', bottom: '-10%', right: '-10%' }}
-      />
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className="bento-card relative h-[500px] overflow-hidden group cursor-none"
+    >
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img src={project.image} className="w-full h-full object-cover opacity-20 group-hover:opacity-40 transition-opacity duration-700" alt={project.title} />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1C] via-[#0A0F1C]/40 to-transparent" />
+      </div>
 
-      <div className="max-w-7xl mx-auto">
-        <div className={`text-center mb-16 reveal ${isInView ? 'visible' : ''}`}>
-          <span className="section-label mb-4 block opacity-40">03 / Works</span>
-          <h2
-            className="heading-lg text-white"
-            style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontFamily: "'Outfit', sans-serif" }}
-          >
-            Selected <span className="gradient-text">Masterpieces</span>
-          </h2>
-        </div>
+      {/* Content */}
+      <div className="relative z-10 h-full flex flex-col justify-end" style={{ transform: "translateZ(50px)" }}>
+        <h3 className="text-3xl font-black text-white mb-2 leading-none" style={{ fontFamily: "'Outfit', sans-serif" }}>
+          {project.title}
+        </h3>
+        <p className="text-[#00D4FF] font-mono text-[0.65rem] tracking-[0.3em] uppercase mb-6">
+          {project.role}
+        </p>
+        
+        <p className="text-white/40 text-sm leading-relaxed mb-8 max-w-sm">
+          {project.problem}
+        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {projects.map((project, i) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.1 }}
-              className="project-card-v2 group"
-            >
-              <div className="image-wrap relative">
-                <img src={project.image} alt={project.title} />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1C] via-transparent to-transparent opacity-60" />
-                
-                {/* Links Hover Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                  <a 
-                    href={project.live} 
-                    className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center hover:bg-[#00E5FF] hover:text-black transition-all transform hover:scale-110"
-                    title="Live Demo"
-                  >
-                    ↗
-                  </a>
-                  <a 
-                    href={project.github} 
-                    className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center justify-center hover:bg-white hover:text-black transition-all transform hover:scale-110 border border-white/10"
-                    title="GitHub Repo"
-                  >
-                    ⌥
-                  </a>
-                </div>
-              </div>
-
-              <div className="p-8">
-                <h3 
-                  className="text-white text-2xl font-bold mb-2 group-hover:text-[#00E5FF] transition-colors"
-                  style={{ fontFamily: "'Outfit', sans-serif" }}
-                >
-                  {project.title}
-                </h3>
-                <p 
-                  className="text-white/40 text-sm font-mono tracking-wide mb-6"
-                  style={{ fontFamily: "'Space Mono', monospace" }}
-                >
-                  {project.subtitle}
-                </p>
-                
-                <div className="flex items-center gap-4">
-                  <div className="h-[1px] flex-1 bg-white/5 group-hover:bg-[#00E5FF]/30 transition-colors" />
-                  <span className="text-[0.6rem] uppercase tracking-widest text-white/20 font-bold">Case Study</span>
-                </div>
-              </div>
-            </motion.div>
+        <div className="flex gap-2 mb-8">
+          {project.stack.map(s => (
+            <span key={s} className="px-3 py-1 rounded-full border border-white/5 bg-white/5 text-[0.6rem] text-white/50">{s}</span>
           ))}
         </div>
 
-        <div className="text-center mt-24">
-          <a href="#contact" className="btn-outline hoverable rounded-full px-12 py-4 border-white/10 text-white/60 hover:text-white">
-            Discuss a Vision
-          </a>
+        <div className="flex gap-4">
+          <button className="btn-primary py-3 px-6 text-xs">Live Demo</button>
+          <button className="btn-outline py-3 px-6 text-xs">GitHub</button>
+        </div>
+      </div>
+
+      {/* 3D Inner Glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#6C63FF]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" style={{ transform: "translateZ(20px)" }} />
+    </motion.div>
+  );
+}
+
+export function Projects() {
+  return (
+    <section id="projects" className="relative w-full py-20 px-6 bg-[#0A0F1C]">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-end mb-20">
+          <div className="max-w-xl">
+            <span className="text-primary font-mono text-sm tracking-widest uppercase mb-4 block">03 / Works</span>
+            <h2 className="text-white text-5xl font-black mb-6 leading-none" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              Selected <span className="gradient-text">Masterpieces</span>
+            </h2>
+          </div>
+          <button className="text-[#00D4FF] text-xs uppercase tracking-[0.4em] font-bold border-b border-[#00D4FF]/20 pb-2 hover:tracking-[0.6em] transition-all">
+            View All Projects
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {projects.map((p, i) => (
+            <ProjectCard key={i} project={p} />
+          ))}
         </div>
       </div>
     </section>

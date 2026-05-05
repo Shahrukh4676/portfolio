@@ -1,87 +1,79 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useScroll, useSpring } from "framer-motion";
+import { useRef } from "react";
 
-const timelineItems = [
+const experience = [
   {
-    year: '2023',
-    title: 'Started Web Development',
-    description: 'Began the journey with HTML, CSS, and JavaScript. Built first responsive sites.',
-    side: 'left',
+    year: "2023",
+    title: "Foundations",
+    desc: "Began journey with Core CS, Python, and the MERN stack. Built 5+ CRUD apps."
   },
   {
-    year: '2024',
-    title: 'Full Stack Integration',
-    description: 'Mastered React, Node.js, and MongoDB. Developed several full-stack applications.',
-    side: 'right',
+    year: "2024",
+    title: "The Shift to Immersive",
+    desc: "Started exploring Three.js, WebGL, and Framer Motion to build experiences, not just websites."
   },
   {
-    year: '2025',
-    title: 'Built 10+ Projects',
-    description: 'Currently building high-performance 3D visual experiences and AI-integrated tools.',
-    side: 'left',
-  },
+    year: "2025",
+    title: "Senior Experiments",
+    desc: "Focusing on WebGPU, AI-orchestration, and contributing to the open-source visual web."
+  }
 ];
 
 export function Experience() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "center start"]
+  });
+
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   return (
-    <section id="experience" ref={ref} className="relative w-full py-20 md:py-32 px-6 bg-[#0A0F1C] overflow-hidden">
+    <section id="experience" className="relative w-full py-20 px-6 bg-[#0A0F1C]">
       <div className="max-w-7xl mx-auto">
-        <div className={`text-center mb-20 reveal ${isInView ? 'visible' : ''}`}>
-          <span className="section-label mb-4 block opacity-40">04 / Journey</span>
-          <h2
-            className="heading-lg text-white"
-            style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontFamily: "'Outfit', sans-serif" }}
-          >
-            My <span className="gradient-text">Timeline</span>
+        <div className="text-center mb-32">
+          <span className="text-primary font-mono text-sm tracking-widest uppercase mb-4 block">04 / Journey</span>
+          <h2 className="text-white text-5xl font-black leading-none" style={{ fontFamily: "'Outfit', sans-serif" }}>
+            My Digital <span className="gradient-text">Timeline</span>
           </h2>
         </div>
 
-        <div className="relative">
+        <div ref={containerRef} className="relative max-w-4xl mx-auto">
           {/* Vertical Line */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[1px] h-full bg-gradient-to-b from-[#00E5FF]/50 via-[#7C4DFF]/50 to-transparent hidden md:block" />
+          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-white/5">
+            <motion.div 
+              style={{ scaleY, originY: 0 }}
+              className="w-full h-full bg-gradient-to-b from-[#6C63FF] to-[#00D4FF]"
+            />
+          </div>
 
-          <div className="space-y-24">
-            {timelineItems.map((item, i) => (
+          <div className="space-y-32">
+            {experience.map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: item.side === 'left' ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, delay: i * 0.1 }}
-                className={`relative flex items-center justify-center md:justify-between w-full ${
-                  item.side === 'right' ? 'md:flex-row-reverse' : ''
+                transition={{ duration: 0.8, delay: i * 0.2 }}
+                className={`relative flex items-center justify-start md:justify-between w-full ${
+                  i % 2 === 0 ? "md:flex-row-reverse" : ""
                 }`}
               >
-                {/* Timeline Dot */}
-                <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#00E5FF] shadow-[0_0_15px_#00E5FF] z-10 hidden md:block" />
+                {/* Dot */}
+                <div className="absolute left-[20px] md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-white border-2 border-primary z-20 shadow-[0_0_15px_#6C63FF]" />
 
-                <div className={`w-full md:w-[45%] ${item.side === 'left' ? 'md:text-right' : 'md:text-left'}`}>
-                  <div className="glass rounded-3xl p-8 border border-white/5 bg-white/[0.01] hover:border-[#00E5FF]/30 transition-all duration-500">
-                    <span 
-                      className="text-[#00E5FF] font-black text-4xl mb-4 block"
-                      style={{ fontFamily: "'Outfit', sans-serif" }}
-                    >
-                      {item.year}
-                    </span>
-                    <h4 
-                      className="text-white text-xl font-bold mb-3"
-                      style={{ fontFamily: "'Outfit', sans-serif" }}
-                    >
-                      {item.title}
-                    </h4>
-                    <p 
-                      className="text-white/40 text-sm leading-relaxed"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                    >
-                      {item.description}
-                    </p>
+                <div className="w-full md:w-[45%] pl-16 md:pl-0">
+                  <div className="bento-card relative">
+                    <span className="text-primary font-black text-4xl mb-4 block opacity-20">{item.year}</span>
+                    <h4 className="text-white text-xl font-bold mb-4">{item.title}</h4>
+                    <p className="text-white/40 text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
-                
-                {/* Spacer for empty side */}
+
                 <div className="hidden md:block w-[45%]" />
               </motion.div>
             ))}

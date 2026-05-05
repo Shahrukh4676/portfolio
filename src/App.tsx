@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Lenis from 'lenis';
-import { MagneticCursor } from './components/ui/MagneticCursor';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Nav } from './sections/Nav';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
@@ -8,12 +8,29 @@ import { Stats } from './sections/Stats';
 import { Skills } from './sections/Skills';
 import { Projects } from './sections/Projects';
 import { Experience } from './sections/Experience';
-import { Services } from './sections/Services';
+import { Testimonials } from './sections/Testimonials';
 import { Contact } from './sections/Contact';
 import { Footer } from './sections/Footer';
 import './index.css';
 
 function App() {
+  // ── CUSTOM CURSOR LOGIC ──
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+
+  const ringX = useSpring(mouseX, { stiffness: 150, damping: 20 });
+  const ringY = useSpring(mouseY, { stiffness: 150, damping: 20 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [mouseX, mouseY]);
+
+  // ── SMOOTH SCROLL (LENIS) ──
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.4,
@@ -32,9 +49,12 @@ function App() {
 
   return (
     <>
-      <MagneticCursor />
-      {/* Global Cinematic Noise Overlay */}
-      <div className="noise fixed inset-0 z-[9999] pointer-events-none opacity-[0.03]" />
+      {/* Custom Cursor */}
+      <motion.div style={{ x: mouseX, y: mouseY }} className="cursor-dot hidden lg:block" />
+      <motion.div style={{ x: ringX, y: ringY }} className="cursor-ring hidden lg:block" />
+
+      {/* Global Effects */}
+      <div className="noise" />
       
       <Nav />
       <main>
@@ -42,9 +62,9 @@ function App() {
         <About />
         <Stats />
         <Skills />
-        <Services />
         <Projects />
         <Experience />
+        <Testimonials />
         <Contact />
       </main>
       <Footer />

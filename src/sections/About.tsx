@@ -1,168 +1,114 @@
-import { useRef, useState } from 'react';
-import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion } from "framer-motion";
+
+const container = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.15 }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+};
 
 export function About() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  // ── 3D TILT LOGIC ──
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  const headingText = "About Me";
-
   return (
-    <section id="about" ref={ref} className="relative w-full py-20 md:py-32 px-6 overflow-hidden bg-[#0A0F1C]">
-      {/* Background glow */}
-      <div
-        className="glow-blob w-[500px] h-[500px] opacity-[0.05]"
-        style={{ background: '#00E5FF', top: '20%', right: '-15%' }}
-      />
-
+    <section id="about" className="relative w-full py-20 px-6 bg-[#0A0F1C]">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row items-center gap-20">
-          
-          {/* ── Left: Interactive 3D Card ── */}
-          <div className="w-full lg:w-1/2 perspective-container">
-            <motion.div
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              style={{
-                rotateX,
-                rotateY,
-                transformStyle: "preserve-3d",
-              }}
-              className="relative aspect-square md:aspect-video lg:aspect-square group"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#00E5FF]/20 to-[#7C4DFF]/20 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              <div className="relative h-full w-full bg-white/[0.03] backdrop-blur-[20px] border border-white/10 rounded-[3rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] preserve-3d">
-                <motion.div
-                  animate={{ y: [0, -15, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-0 p-4"
-                >
-                  <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1000" 
-                    className="w-full h-full object-cover rounded-[2.5rem] shadow-2xl"
-                    alt="Shahrukh"
-                  />
-                  {/* Floating Glass Element */}
-                  <motion.div 
-                    style={{ translateZ: 50 }}
-                    className="absolute bottom-10 right-10 p-6 glass rounded-2xl border border-white/10 shadow-2xl hidden md:block"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-[#00E5FF] status-dot-pulse" />
-                      <span className="text-[0.6rem] uppercase tracking-widest text-white/60 font-bold">Open to visions</span>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* ── Right: Content ── */}
-          <div className="w-full lg:w-1/2">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                visible: {
-                  transition: { staggerChildren: 0.1 }
-                }
-              }}
-              className="space-y-10"
-            >
-              {/* Animated Heading */}
-              <h2 className="text-white flex flex-wrap gap-[0.2em]">
-                {headingText.split("").map((char, i) => (
-                  <motion.span
-                    key={i}
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0 }
-                    }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-[clamp(2.5rem,8vw,5rem)] font-black leading-none"
-                    style={{ fontFamily: "'Outfit', sans-serif" }}
-                  >
-                    {char === " " ? "\u00A0" : char}
-                  </motion.span>
-                ))}
+        <motion.div 
+          variants={container} 
+          initial="hidden" 
+          whileInView="show" 
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-4 grid-rows-auto gap-6"
+        >
+          {/* ── 1. Big Intro Card ── */}
+          <motion.div 
+            variants={item} 
+            className="md:col-span-2 md:row-span-2 bento-card flex flex-col justify-between"
+          >
+            <div>
+              <span className="text-primary font-mono text-sm tracking-widest uppercase mb-4 block">01 / Profile</span>
+              <h2 className="text-white text-5xl font-black mb-6 leading-none" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                I'm <span className="gradient-text">Shahrukh</span>
               </h2>
+              <p className="text-white/60 text-lg leading-relaxed">
+                A Full Stack Developer dedicated to crafting immersive, high-performance web experiences. 
+                I don't just write code—I design digital journeys that leave an impact.
+              </p>
+            </div>
+            <div className="mt-8 flex gap-4">
+              <div className="flex -space-x-2">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="w-10 h-10 rounded-full border-2 border-[#0A0F1C] bg-white/10" />
+                ))}
+              </div>
+              <span className="text-xs text-white/30 self-center uppercase tracking-widest">Collaborating worldwide</span>
+            </div>
+          </motion.div>
 
-              <motion.div 
-                variants={{
-                  hidden: { opacity: 0, x: 20 },
-                  visible: { opacity: 1, x: 0 }
-                }}
-                className="space-y-6"
-              >
-                <p 
-                  className="text-white/80 text-xl md:text-2xl font-medium leading-relaxed"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                >
-                  I’m <span className="gradient-text-animated font-bold">Shahrukh</span>, a full-stack developer focused on building fast, scalable, and visually engaging web applications.
-                </p>
-                <p 
-                  className="text-white/40 text-lg leading-relaxed"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                >
-                  I don’t just write code — I design experiences. From smooth UI animations to optimized backend systems, I care about how things feel as much as how they work.
-                </p>
-                <p 
-                  className="text-white/40 text-lg leading-relaxed"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                >
-                  I’ve built projects using React, Node.js, and modern frontend tools, with a strong focus on performance, clean architecture, and user experience.
-                </p>
-                <p 
-                  className="text-white/40 text-lg leading-relaxed"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                >
-                  Currently, I’m sharpening my problem-solving skills and exploring advanced UI/UX patterns to create products that stand out.
-                </p>
-              </motion.div>
+          {/* ── 2. Tech Stack Card ── */}
+          <motion.div variants={item} className="md:col-span-2 bento-card">
+            <h3 className="text-white text-xl font-bold mb-6">What I Build</h3>
+            <div className="flex flex-wrap gap-3">
+              {['SaaS', '3D Webs', 'AI Tools', 'Dashboards', 'Portfolios'].map(tag => (
+                <span key={tag} className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-cyan/70">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div className="mt-10 grid grid-cols-4 gap-4 opacity-40">
+              {['React', 'Node', 'Three', 'Framer'].map(icon => (
+                <div key={icon} className="aspect-square rounded-xl bg-white/5 flex items-center justify-center text-[0.6rem]">
+                  {icon}
+                </div>
+              ))}
+            </div>
+          </motion.div>
 
-              <motion.div 
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-                className="flex flex-wrap gap-6 pt-6"
-              >
-                <a href="#contact" className="btn-primary rounded-full px-12 py-4">Hire Me</a>
-                <button className="btn-outline rounded-full px-12 py-4 border-white/10 text-white/60 hover:text-white transition-all hover:scale-105 hover:shadow-[0_10px_30px_rgba(0,229,255,0.2)]">Download CV</button>
-              </motion.div>
-            </motion.div>
-          </div>
+          {/* ── 3. Location Card ── */}
+          <motion.div variants={item} className="bento-card flex flex-col justify-between overflow-hidden relative">
+            <div className="relative z-10">
+              <h3 className="text-white text-xl font-bold mb-2">Location</h3>
+              <p className="text-white/40 text-sm">India 🇮🇳</p>
+            </div>
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/20 blur-3xl rounded-full" />
+            <div className="mt-10 text-4xl">🌏</div>
+          </motion.div>
 
-        </div>
+          {/* ── 4. Fun / Vibe Card ── */}
+          <motion.div variants={item} className="bento-card flex flex-col justify-between">
+            <h3 className="text-white text-xl font-bold mb-2">Current Vibe</h3>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-pink/20 flex items-center justify-center animate-pulse">
+                🎵
+              </div>
+              <div>
+                <p className="text-white text-xs font-bold">Midnight Coding</p>
+                <p className="text-white/30 text-[0.6rem] uppercase">Lo-fi Beats</p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ── 5. Problem Solver Card (Senior insight) ── */}
+          <motion.div variants={item} className="md:col-span-2 bento-card border-l-4 border-l-primary">
+            <h3 className="text-white text-xl font-bold mb-4">Problems I love solving</h3>
+            <p className="text-white/50 text-sm italic">
+              "Turning complex backend logic into seamless, 60fps frontend interactions."
+            </p>
+          </motion.div>
+
+          {/* ── 6. Learning Card ── */}
+          <motion.div variants={item} className="md:col-span-2 bento-card bg-gradient-to-br from-white/[0.03] to-transparent">
+            <h3 className="text-white text-xl font-bold mb-4">Currently Learning</h3>
+            <div className="flex items-center gap-3 text-cyan/80 font-mono text-xs">
+              <span className="w-2 h-2 rounded-full bg-cyan animate-ping" />
+              WebGPU & Advanced Physics
+            </div>
+          </motion.div>
+
+        </motion.div>
       </div>
     </section>
   );
