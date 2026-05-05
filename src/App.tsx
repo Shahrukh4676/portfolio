@@ -48,7 +48,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="relative overflow-x-hidden">
       {/* Custom Cursor */}
       <motion.div style={{ x: mouseX, y: mouseY }} className="cursor-dot hidden lg:block" />
       <motion.div style={{ x: ringX, y: ringY }} className="cursor-ring hidden lg:block" />
@@ -68,7 +68,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

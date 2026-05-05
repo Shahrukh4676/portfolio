@@ -31,7 +31,6 @@ export function Skills() {
             style={{ 
               top: `${Math.random() * 80 + 10}%`, 
               left: `${Math.random() * 80 + 10}%`,
-              filter: 'blur(2px)'
             }}
           >
             {icon}
@@ -44,8 +43,8 @@ export function Skills() {
           
           {/* Left: Content */}
           <div className="w-full lg:w-1/2">
-            <span className="text-primary font-mono text-sm tracking-widest uppercase mb-4 block">02 / Expertise</span>
-            <h2 className="text-white text-5xl font-black mb-8 leading-none" style={{ fontFamily: "'Outfit', sans-serif" }}>
+            <span className="text-primary font-mono text-[0.6rem] md:text-sm tracking-widest uppercase mb-4 block">02 / Expertise</span>
+            <h2 className="text-white text-3xl md:text-5xl font-black mb-8 leading-none" style={{ fontFamily: "'Outfit', sans-serif" }}>
               The Tech <span className="gradient-text">Arsenal</span>
             </h2>
             <p className="text-white/40 text-lg mb-12 max-w-md">

@@ -4,16 +4,16 @@ export function Contact() {
   return (
     <section id="contact" className="relative w-full py-24 px-6 bg-[#0A0F1C] overflow-hidden">
       {/* Background blobs */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col lg:flex-row gap-20 items-center">
           
           {/* Left: Text */}
-          <div className="w-full lg:w-1/2">
-            <span className="text-cyan font-mono text-sm tracking-widest uppercase mb-4 block">06 / Contact</span>
-            <h2 className="text-white text-[clamp(2.5rem,7vw,5rem)] font-black leading-[0.9] mb-8" style={{ fontFamily: "'Outfit', sans-serif" }}>
-              Let's build<br />
+          <div className="w-full lg:w-1/2 text-center lg:text-left">
+            <span className="text-cyan font-mono text-[0.6rem] md:text-sm tracking-widest uppercase mb-4 block">06 / Contact</span>
+            <h2 className="text-white text-4xl md:text-[clamp(2.5rem,7vw,5rem)] font-black leading-[0.9] mb-8" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              Let's build<br className="hidden md:block" />
               something <span className="gradient-text">insane.</span>
             </h2>
             <p className="text-white/40 text-lg max-w-md">
@@ -27,16 +27,16 @@ export function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-2">
                   <label className="text-[0.6rem] uppercase tracking-widest text-white/30 font-bold ml-2">Name</label>
-                  <input type="text" placeholder="Your Name" className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-cyan/50 transition-all" />
+                  <input type="text" placeholder="Your Name" className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-base text-white outline-none focus:border-cyan/50 transition-all" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-[0.6rem] uppercase tracking-widest text-white/30 font-bold ml-2">Email</label>
-                  <input type="email" placeholder="email@example.com" className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-cyan/50 transition-all" />
+                  <input type="email" placeholder="email@example.com" className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-base text-white outline-none focus:border-cyan/50 transition-all" />
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-[0.6rem] uppercase tracking-widest text-white/30 font-bold ml-2">Message</label>
-                <textarea rows={4} placeholder="What's on your mind?" className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-cyan/50 transition-all resize-none" />
+                <textarea rows={4} placeholder="What's on your mind?" className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-base text-white outline-none focus:border-cyan/50 transition-all resize-none" />
               </div>
               <motion.button
                 whileHover={{ scale: 1.02 }}

@@ -21,7 +21,7 @@ function CountUp({ value, suffix = "" }: { value: string; suffix?: string }) {
   });
 
   return (
-    <span ref={ref} className="stat-value">
+    <span ref={ref} className="text-4xl md:text-6xl font-black text-white" style={{ fontFamily: "'Outfit', sans-serif" }}>
       {displayValue}{suffix || value.replace(/[0-9]/g, "")}
     </span>
   );

@@ -24,7 +24,7 @@ export function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center bg-[#0A0F1C]"
+      className="relative w-full h-[100dvh] overflow-hidden flex flex-col items-center justify-center bg-[#0A0F1C]"
     >
       {/* ── Background Video ── */}
       <motion.div
@@ -55,7 +55,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-xl"
+            className="flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/5 bg-white/[0.02]"
           >
             <div className="w-2 h-2 rounded-full bg-cyan animate-pulse shadow-[0_0_10px_#00D4FF]" />
             <span className="text-white/40 text-[0.6rem] font-bold tracking-[0.2em] uppercase font-mono">Available for hire</span>
@@ -89,8 +89,8 @@ export function Hero() {
             className="text-white font-black"
             style={{
               fontFamily: "'Outfit', sans-serif",
-              fontSize: 'clamp(3.5rem, 15vw, 12rem)',
-              lineHeight: 0.8,
+              fontSize: 'clamp(2.2rem, 12vw, 10rem)',
+              lineHeight: 0.85,
               letterSpacing: '-0.03em',
             }}
           >
@@ -103,7 +103,7 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="text-2xl md:text-4xl font-bold uppercase tracking-widest gradient-text mb-8"
+          className="text-xl md:text-4xl font-bold uppercase tracking-widest gradient-text mb-6 md:mb-8"
           style={{ fontFamily: "'Outfit', sans-serif" }}
         >
           Full Stack Developer
@@ -113,10 +113,10 @@ export function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
-          className="text-white/50 mb-12 max-w-xl mx-auto text-lg md:text-xl leading-relaxed"
+          className="text-white/50 mb-10 md:mb-12 max-w-sm md:max-w-xl mx-auto text-base md:text-xl leading-relaxed px-4 md:px-0"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
         >
-          I build immersive, high-performance web experiences<br />
+          I build immersive, high-performance web experiences<br className="hidden md:block" />
           where code meets cinematic design.
         </motion.p>
 
@@ -124,10 +124,10 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.5 }}
-          className="flex items-center gap-6 flex-wrap justify-center"
+          className="flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full md:w-auto px-6 md:px-0"
         >
-          <a href="#projects" className="btn-primary rounded-full px-12 py-4">View Projects</a>
-          <a href="#contact" className="btn-outline hoverable rounded-full px-12 py-4 border-white/10 text-white/60 hover:text-white">Let's Talk</a>
+          <a href="#projects" className="btn-primary w-full md:w-auto rounded-full px-12 py-4">View Projects</a>
+          <a href="#contact" className="btn-outline w-full md:w-auto hoverable rounded-full px-12 py-4 border-white/10 text-white/60 hover:text-white">Let's Talk</a>
         </motion.div>
       </motion.div>
 

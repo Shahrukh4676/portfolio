@@ -36,8 +36,8 @@ export function About() {
             className="md:col-span-2 md:row-span-2 bento-card flex flex-col justify-between"
           >
             <div>
-              <span className="text-primary font-mono text-sm tracking-widest uppercase mb-4 block">01 / Profile</span>
-              <h2 className="text-white text-5xl font-black mb-6 leading-none" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <span className="text-primary font-mono text-[0.6rem] md:text-sm tracking-widest uppercase mb-4 block">01 / Profile</span>
+              <h2 className="text-white text-3xl md:text-5xl font-black mb-6 leading-none" style={{ fontFamily: "'Outfit', sans-serif" }}>
                 I'm <span className="gradient-text">Shahrukh</span>
               </h2>
               <p className="text-white/60 text-lg leading-relaxed">
@@ -80,7 +80,7 @@ export function About() {
               <h3 className="text-white text-xl font-bold mb-2">Location</h3>
               <p className="text-white/40 text-sm">India 🇮🇳</p>
             </div>
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/20 blur-3xl rounded-full" />
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/20 rounded-full" />
             <div className="mt-10 text-4xl">🌏</div>
           </motion.div>
 

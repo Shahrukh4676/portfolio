@@ -56,7 +56,7 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      className="bento-card relative h-[500px] overflow-hidden group cursor-none"
+      className="bento-card relative h-[400px] md:h-[500px] overflow-hidden group cursor-none"
     >
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
@@ -83,9 +83,9 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
           ))}
         </div>
 
-        <div className="flex gap-4">
-          <button className="btn-primary py-3 px-6 text-xs">Live Demo</button>
-          <button className="btn-outline py-3 px-6 text-xs">GitHub</button>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <button className="btn-primary py-3 px-6 text-xs w-full sm:w-auto">Live Demo</button>
+          <button className="btn-outline py-3 px-6 text-xs w-full sm:w-auto">GitHub</button>
         </div>
       </div>
 
