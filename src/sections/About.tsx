@@ -1,125 +1,167 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-
-const stats = [
-  { value: '2+', label: 'Years Building' },
-  { value: '12+', label: 'Projects Shipped' },
-  { value: '5+', label: 'Tech Stacks' },
-  { value: '∞', label: 'Ideas in Queue' },
-];
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 50 },
-  visible: (i: number) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.7, delay: i * 0.12, ease: 'easeOut' as const },
-  }),
-};
+import { useRef, useState } from 'react';
+import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 export function About() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
-  const imageY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  // ── 3D TILT LOGIC ──
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  const headingText = "About Me";
 
   return (
-    <section id="about" ref={sectionRef} className="relative w-full py-32 md:py-40 px-6 overflow-hidden">
+    <section id="about" ref={ref} className="relative w-full py-20 md:py-32 px-6 overflow-hidden bg-[#0A0F1C]">
       {/* Background glow */}
       <div
-        className="glow-blob w-[500px] h-[500px] opacity-[0.07]"
-        style={{ background: '#7B2FBE', top: '20%', right: '-15%' }}
+        className="glow-blob w-[500px] h-[500px] opacity-[0.05]"
+        style={{ background: '#00E5FF', top: '20%', right: '-15%' }}
       />
 
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          {/* Left: Image with parallax */}
-          <motion.div style={{ y: imageY }} className="relative hidden lg:block">
-            <div className="relative w-full aspect-[3/4] max-w-md mx-auto">
-              <div
-                className="absolute -inset-0.5 rounded-3xl opacity-60"
-                style={{ background: 'linear-gradient(135deg, #00f5ff, #7B2FBE)' }}
-              />
-              <div className="relative w-full h-full rounded-3xl overflow-hidden bg-[#0a0a0f]">
-                <img
-                  src="/shahrukh.png"
-                  alt="Shahrukh"
-                  className="w-full h-full object-cover object-center"
-                  style={{ filter: 'grayscale(0.2) contrast(1.1)' }}
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{ background: 'linear-gradient(to top, rgba(5,5,8,0.8) 0%, transparent 50%)' }}
-                />
+        <div className="flex flex-col lg:flex-row items-center gap-20">
+          
+          {/* ── Left: Interactive 3D Card ── */}
+          <div className="w-full lg:w-1/2 perspective-container">
+            <motion.div
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              style={{
+                rotateX,
+                rotateY,
+                transformStyle: "preserve-3d",
+              }}
+              className="relative aspect-square md:aspect-video lg:aspect-square group"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-[#00E5FF]/20 to-[#7C4DFF]/20 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative h-full w-full bg-white/[0.03] backdrop-blur-[20px] border border-white/10 rounded-[3rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] preserve-3d">
+                <motion.div
+                  animate={{ y: [0, -15, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute inset-0 p-4"
+                >
+                  <img 
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1000" 
+                    className="w-full h-full object-cover rounded-[2.5rem] shadow-2xl"
+                    alt="Shahrukh"
+                  />
+                  {/* Floating Glass Element */}
+                  <motion.div 
+                    style={{ translateZ: 50 }}
+                    className="absolute bottom-10 right-10 p-6 glass rounded-2xl border border-white/10 shadow-2xl hidden md:block"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-[#00E5FF] status-dot-pulse" />
+                      <span className="text-[0.6rem] uppercase tracking-widest text-white/60 font-bold">Open to visions</span>
+                    </div>
+                  </motion.div>
+                </motion.div>
               </div>
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -right-6 top-1/3 glass-vivid rounded-2xl px-5 py-4 border border-white/10"
-              >
-                <p className="section-label mb-1 opacity-50">Status</p>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-white font-medium text-sm" style={{ fontFamily: "'Outfit', sans-serif" }}>Active for Hire</span>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Right: Content */}
-          <div className="flex flex-col gap-8">
-            <motion.div
-              custom={0} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-            >
-              <span className="section-label mb-3 block opacity-50">01 / Profile</span>
-              <h2
-                className="heading-lg text-white"
-                style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontFamily: "'Outfit', sans-serif" }}
-              >
-                I transform complex problems into{' '}
-                <span className="gradient-text">stunning</span>
-                {' '}realities.
-              </h2>
-            </motion.div>
-
-            <motion.p
-              custom={1} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-              className="text-white/70 text-lg leading-relaxed"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-            >
-              I'm Shahrukh — a Full Stack Developer and Visual Experience Creator based in India. I specialize in building immersive digital products that bridge the gap between performance and high-end aesthetics.
-            </motion.p>
-
-            <motion.p
-              custom={2} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-              className="text-white/50 text-base leading-relaxed"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-            >
-              Currently pursuing my B.E. in Computer Science, I focus on creating fast, unforgettable digital experiences using React, Node.js, and Three.js. My goal is to build products that not only work flawlessly but leave a lasting impression.
-            </motion.p>
-
-            {/* Stats */}
-            <motion.div
-              custom={3} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-              className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4 border-t border-white/5"
-            >
-              {stats.map((s) => (
-                <div key={s.label} className="flex flex-col gap-1">
-                  <span className="stat-number" style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2rem', fontWeight: 700 }}>{s.value}</span>
-                  <span className="text-white/30 text-[0.6rem] tracking-[0.2em] uppercase" style={{ fontFamily: "'Space Mono', monospace" }}>{s.label}</span>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* CTA */}
-            <motion.div
-              custom={4} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-              className="flex gap-4 flex-wrap pt-2"
-            >
-              <a href="#contact" className="btn-primary hoverable rounded-full px-8 py-3">
-                <span>Hire Me</span>
-              </a>
-              <a href="#contact" className="btn-outline hoverable rounded-full px-8 py-3">Get in Touch</a>
             </motion.div>
           </div>
+
+          {/* ── Right: Content ── */}
+          <div className="w-full lg:w-1/2">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                visible: {
+                  transition: { staggerChildren: 0.1 }
+                }
+              }}
+              className="space-y-10"
+            >
+              {/* Animated Heading */}
+              <h2 className="text-white flex flex-wrap gap-[0.2em]">
+                {headingText.split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0 }
+                    }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-[clamp(2.5rem,8vw,5rem)] font-black leading-none"
+                    style={{ fontFamily: "'Outfit', sans-serif" }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </motion.span>
+                ))}
+              </h2>
+
+              <motion.div 
+                variants={{
+                  hidden: { opacity: 0, x: 20 },
+                  visible: { opacity: 1, x: 0 }
+                }}
+                className="space-y-6"
+              >
+                <p 
+                  className="text-white/80 text-xl md:text-2xl font-medium leading-relaxed"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                >
+                  I’m <span className="gradient-text-animated font-bold">Shahrukh</span>, a full-stack developer focused on building fast, scalable, and visually engaging web applications.
+                </p>
+                <p 
+                  className="text-white/40 text-lg leading-relaxed"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                >
+                  I don’t just write code — I design experiences. From smooth UI animations to optimized backend systems, I care about how things feel as much as how they work.
+                </p>
+                <p 
+                  className="text-white/40 text-lg leading-relaxed"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                >
+                  I’ve built projects using React, Node.js, and modern frontend tools, with a strong focus on performance, clean architecture, and user experience.
+                </p>
+                <p 
+                  className="text-white/40 text-lg leading-relaxed"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                >
+                  Currently, I’m sharpening my problem-solving skills and exploring advanced UI/UX patterns to create products that stand out.
+                </p>
+              </motion.div>
+
+              <motion.div 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                className="flex flex-wrap gap-6 pt-6"
+              >
+                <a href="#contact" className="btn-primary rounded-full px-12 py-4">Hire Me</a>
+                <button className="btn-outline rounded-full px-12 py-4 border-white/10 text-white/60 hover:text-white transition-all hover:scale-105 hover:shadow-[0_10px_30px_rgba(0,229,255,0.2)]">Download CV</button>
+              </motion.div>
+            </motion.div>
+          </div>
+
         </div>
       </div>
     </section>

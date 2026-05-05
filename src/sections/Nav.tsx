@@ -4,6 +4,7 @@ import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 const links = [
   { label: 'Profile', href: '#about' },
   { label: 'Expertise', href: '#skills' },
+  { label: 'Solutions', href: '#services' },
   { label: 'Masterpieces', href: '#projects' },
   { label: 'Journey', href: '#experience' },
 ];
@@ -24,7 +25,7 @@ export function Nav() {
         animate={{
           scale: scrolled ? 0.95 : 1,
           y: scrolled ? -10 : 0,
-          backgroundColor: scrolled ? 'rgba(5,5,8,0.9)' : 'rgba(255,255,255,0.02)',
+          backgroundColor: scrolled ? 'rgba(10,15,28,0.9)' : 'rgba(255,255,255,0.02)',
           borderColor: scrolled ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)',
         }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -32,7 +33,7 @@ export function Nav() {
         style={{ boxShadow: scrolled ? '0 20px 40px rgba(0,0,0,0.4)' : 'none' }}
       >
         <a href="#" className="flex items-center gap-2 group">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#00f5ff] to-[#7B2FBE] flex items-center justify-center text-white font-bold text-[0.6rem]">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#00E5FF] to-[#7C4DFF] flex items-center justify-center text-[#0A0F1C] font-bold text-[0.6rem]">
             S
           </div>
           <span className="text-white font-bold tracking-[0.2em] uppercase text-[0.6rem] group-hover:tracking-[0.4em] transition-all duration-500" style={{ fontFamily: "'Outfit', sans-serif" }}>
@@ -61,7 +62,7 @@ export function Nav() {
           <span className="text-[0.6rem] uppercase tracking-[0.2em] text-white/40 group-hover:text-white transition-colors font-mono">
             Contact
           </span>
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+          <div className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse shadow-[0_0_8px_#00E5FF]" />
         </a>
       </motion.div>
     </motion.header>

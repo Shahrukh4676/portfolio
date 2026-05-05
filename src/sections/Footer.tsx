@@ -1,32 +1,23 @@
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+  
   return (
-    <footer className="w-full py-12 px-6 border-t border-white/5 bg-[#050508] relative z-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-        <div className="flex flex-col gap-1 text-center md:text-left">
-          <span className="text-white font-bold tracking-[0.2em] uppercase text-sm" style={{ fontFamily: "'Outfit', sans-serif" }}>
-            Shahrukh <span className="text-[#00f5ff]">Visuals</span>
-          </span>
-          <span className="text-white/20 text-[0.6rem] font-mono tracking-widest uppercase">
-            © 2026 Build for Excellence
-          </span>
+    <footer className="w-full py-12 px-6 bg-[#0A0F1C] border-t border-white/5">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col items-center md:items-start gap-2">
+          <p 
+            className="text-white/60 text-sm font-medium"
+            style={{ fontFamily: "'Outfit', sans-serif" }}
+          >
+            Built with ❤️ by <span className="text-white font-bold">Shahrukh</span>
+          </p>
+          <p className="text-white/20 text-[0.6rem] uppercase tracking-[0.3em] font-mono">
+            Full Stack Developer • Visual Creator
+          </p>
         </div>
-
-        <div className="flex items-center gap-12">
-          {['LinkedIn', 'GitHub', 'Email'].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="text-white/20 hover:text-white text-[0.6rem] uppercase tracking-[0.3em] font-mono transition-colors"
-            >
-              {item}
-            </a>
-          ))}
-        </div>
-
-        <div className="text-center md:text-right">
-          <span className="text-white/20 text-[0.6rem] font-mono tracking-widest uppercase">
-            Made with React & Passion
-          </span>
+        
+        <div className="text-white/20 text-[0.65rem] uppercase tracking-widest font-mono">
+          © {currentYear} ALL RIGHTS RESERVED
         </div>
       </div>
     </footer>

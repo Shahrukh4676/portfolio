@@ -4,9 +4,11 @@ import { MagneticCursor } from './components/ui/MagneticCursor';
 import { Nav } from './sections/Nav';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
+import { Stats } from './sections/Stats';
 import { Skills } from './sections/Skills';
 import { Projects } from './sections/Projects';
 import { Experience } from './sections/Experience';
+import { Services } from './sections/Services';
 import { Contact } from './sections/Contact';
 import { Footer } from './sections/Footer';
 import './index.css';
@@ -31,11 +33,16 @@ function App() {
   return (
     <>
       <MagneticCursor />
+      {/* Global Cinematic Noise Overlay */}
+      <div className="noise fixed inset-0 z-[9999] pointer-events-none opacity-[0.03]" />
+      
       <Nav />
       <main>
         <Hero />
         <About />
+        <Stats />
         <Skills />
+        <Services />
         <Projects />
         <Experience />
         <Contact />
